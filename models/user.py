@@ -8,5 +8,4 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     uuid = Column(GUID, primary_key=False, default=GUID_DEFAULT_SQLITE)
     username = Column(String(50), unique=True, index=True, nullable=False)
-    email = Column(String(50), unique=True, index=True, nullable=False)
     password = Column(String(128))

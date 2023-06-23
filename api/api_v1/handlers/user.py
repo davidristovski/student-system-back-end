@@ -14,7 +14,7 @@ user_router = APIRouter()
 user_service = UserService()
 
 
-@user_router.get("/", status_code=status.HTTP_200_OK, response_model=List[UserResponse])
+@user_router.get("/", status_code=status.HTTP_200_OK, dependencies=[Depends(get_current_user)], response_model=List[UserResponse])
 def get_users(db: Session = Depends(get_db_session)):
     return user_service.get_all(db=db)
 
@@ -29,7 +29,6 @@ def create_user(user: UserRequest, db: Session = Depends(get_db_session)):
         )
     user_record = UserRequest(
         **{
-            "email": user.email,
             "username": user.username,
             "password": hash_password(user.password),
         }
