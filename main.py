@@ -1,13 +1,31 @@
+from database.db_healthcheck import init_db
 from errors.exceptions import validation_exception_handler
-from routers.courses import router as courses_router
-from routers.grade_cards import router as grade_cards_router
-from routers.students import router as students_router
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+from api.api_v1.router import router
+from core.config import settings
 
-app = FastAPI()
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-app.include_router(students_router)
-app.include_router(courses_router)
-app.include_router(grade_cards_router)
+
+@app.on_event("startup")
+def app_init():
+    app.include_router(router, prefix=settings.API_V1_STR)
+    init_db()

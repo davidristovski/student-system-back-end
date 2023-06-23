@@ -24,4 +24,7 @@ archive.zip
 *~
 .*.sw?
 .DS_Store
-
+.env
+database.db
+test.db
+cleanup.py

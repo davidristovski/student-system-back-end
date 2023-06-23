@@ -2,15 +2,14 @@ import uuid
 import pytest
 from fastapi.testclient import TestClient
 from main import app
-from persistence.database.session import get_db_session
+from api.deps.db import get_db_session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from persistence.database.base_class import Base
-
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+from database.base_class import Base
+from core.config import settings
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    settings.SQLALCHEMY_TEST_DATABASE_URI, connect_args={"check_same_thread": False}
 )
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

@@ -4,19 +4,19 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from persistence.database.session import get_db_session
-from persistence.services import CourseService, StudentService, GradeCardService
+from api.deps.db import get_db_session
+from services.course import CourseService
+from services.student import StudentService
+from services.grade_card import GradeCardService
 from schemas.grade_card import GradeCardResponse, GradeCardRequest
 
-router = APIRouter(prefix="/grade_cards", tags=["grade_cards"])
-
-
+grade_card_router = APIRouter()
 student_service = StudentService()
 course_service = CourseService()
 grade_card_service = GradeCardService()
 
 
-@router.get("/", status_code=status.HTTP_200_OK, response_model=List[GradeCardResponse])
+@grade_card_router.get("/", status_code=status.HTTP_200_OK, response_model=List[GradeCardResponse])
 def get_all_grade_cards(db: Session = Depends(get_db_session)):
     grade_cards = grade_card_service.get_all(db=db)
     return [
@@ -32,7 +32,7 @@ def get_all_grade_cards(db: Session = Depends(get_db_session)):
     ]
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=GradeCardResponse)
+@grade_card_router.post("/", status_code=status.HTTP_201_CREATED, response_model=GradeCardResponse)
 def create_grade_card(
     grade_card: GradeCardRequest, db: Session = Depends(get_db_session)
 ):
@@ -64,7 +64,7 @@ def create_grade_card(
     )
 
 
-@router.delete("/{grade_card_uuid}", status_code=status.HTTP_204_NO_CONTENT)
+@grade_card_router.delete("/{grade_card_uuid}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_grade_card(grade_card_uuid: UUID, db: Session = Depends(get_db_session)):
     db_grade_card = grade_card_service.get_by_uuid(db=db, uuid=grade_card_uuid)
     if not db_grade_card:

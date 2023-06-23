@@ -2,7 +2,7 @@ from fastapi_utils.guid_type import GUID, GUID_DEFAULT_SQLITE
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
-from persistence.database.base_class import Base
+from database.base_class import Base
 
 
 class Course(Base):
