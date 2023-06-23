@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -7,7 +9,6 @@ from core.security import hash_password
 from models.user import User as UserModel
 from schemas.user import UserRequest, UserResponse
 from services.user import UserService
-from typing import List
 
 user_router = APIRouter()
 user_service = UserService()
