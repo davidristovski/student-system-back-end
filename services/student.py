@@ -1,7 +1,3 @@
-from typing import Optional
-
-from sqlalchemy.orm import Session
-
 from models.student import Student as StudentModel
 from services.base import CRUDBase
 
