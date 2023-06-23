@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from api.deps.db import get_db_session
 from api.deps.user import get_current_user
 from core.security import create_access_token, create_refresh_token
+from models.user import User as UserModel
 from schemas.auth import TokenSchema
 from schemas.user import UserRequest, UserResponse
 from services.user import UserService
@@ -33,6 +34,11 @@ def login(
         "access_token": create_access_token(user.uuid),
         "refresh_token": create_refresh_token(user.uuid),
     }
+
+
+@auth_router.get("/me", status_code=status.HTTP_200_OK, response_model=UserResponse)
+async def get_me(user: UserModel = Depends(get_current_user)):
+    return user
 
 
 @auth_router.post(

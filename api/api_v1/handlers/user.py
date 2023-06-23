@@ -35,8 +35,3 @@ def create_user(user: UserRequest, db: Session = Depends(get_db_session)):
         }
     )
     return user_service.create_record(db=db, record=user_record)
-
-
-@user_router.get("/me", status_code=status.HTTP_200_OK, response_model=UserResponse)
-async def get_me(user: UserModel = Depends(get_current_user)):
-    return user
