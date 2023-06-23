@@ -1,12 +1,14 @@
 import uuid
+
 import pytest
 from fastapi.testclient import TestClient
-from main import app
-from api.deps.db import get_db_session
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from database.base_class import Base
+from sqlalchemy.orm import sessionmaker
+
+from api.deps.db import get_db_session
 from core.config import settings
+from database.base_class import Base
+from main import app
 
 engine = create_engine(
     settings.SQLALCHEMY_TEST_DATABASE_URI, connect_args={"check_same_thread": False}

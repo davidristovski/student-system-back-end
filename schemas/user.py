@@ -1,24 +1,18 @@
-from typing import Optional
 from uuid import UUID
-from pydantic import BaseModel, EmailStr, Field
+
+from pydantic import BaseModel, EmailStr, Field, constr
 
 
-class UserAuth(BaseModel):
-    email: EmailStr = Field(..., description="user email")
-    username: str = Field(..., min_length=5, max_length=50, description="user username")
-    password: str = Field(..., min_length=5, max_length=24, description="user password")
+class UserRequest(BaseModel):
+    email: EmailStr
+    username: constr(min_length=5, max_length=24)
+    password: constr(min_length=5, max_length=100)
 
 
-class UserOut(BaseModel):
-    user_id: UUID
+class UserResponse(BaseModel):
+    uuid: UUID
     username: str
     email: EmailStr
-    first_name: Optional[str]
-    last_name: Optional[str]
-    disabled: Optional[bool] = False
 
-
-class UserUpdate(BaseModel):
-    email: Optional[EmailStr] = None
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
+    class Config:
+        orm_mode = True

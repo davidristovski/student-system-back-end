@@ -1,0 +1,41 @@
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
+from api.deps.db import get_db_session
+from api.deps.user import get_current_user
+from core.security import hash_password
+from models.user import User as UserModel
+from schemas.user import UserRequest, UserResponse
+from services.user import UserService
+from typing import List
+
+user_router = APIRouter()
+user_service = UserService()
+
+
+@user_router.get("/", status_code=status.HTTP_200_OK, response_model=List[UserResponse])
+def get_users(db: Session = Depends(get_db_session)):
+    return user_service.get_all(db=db)
+
+
+@user_router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserResponse)
+def create_user(user: UserRequest, db: Session = Depends(get_db_session)):
+    db_user = user_service.get_by_username(db=db, username=user.username)
+    if db_user:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="A user with this username already exist.",
+        )
+    user_record = UserRequest(
+        **{
+            "email": user.email,
+            "username": user.username,
+            "password": hash_password(user.password),
+        }
+    )
+    return user_service.create_record(db=db, record=user_record)
+
+
+@user_router.get("/me", status_code=status.HTTP_200_OK, response_model=UserResponse)
+async def get_me(user: UserModel = Depends(get_current_user)):
+    return user

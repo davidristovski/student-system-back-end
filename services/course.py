@@ -1,7 +1,9 @@
-from services.base import CRUDBase
-from models.course import Course as CourseModel
-from sqlalchemy.orm import Session
 from typing import Optional
+
+from sqlalchemy.orm import Session
+
+from models.course import Course as CourseModel
+from services.base import CRUDBase
 
 
 class CourseService(CRUDBase):

@@ -1,5 +1,5 @@
 from fastapi_utils.guid_type import GUID, GUID_DEFAULT_SQLITE
-from sqlalchemy import Column, Integer, ForeignKey, Enum
+from sqlalchemy import Column, Enum, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
 from database.base_class import Base

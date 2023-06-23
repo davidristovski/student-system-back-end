@@ -5,10 +5,10 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from api.deps.db import get_db_session
+from schemas.grade_card import GradeCardRequest, GradeCardResponse
 from services.course import CourseService
-from services.student import StudentService
 from services.grade_card import GradeCardService
-from schemas.grade_card import GradeCardResponse, GradeCardRequest
+from services.student import StudentService
 
 grade_card_router = APIRouter()
 student_service = StudentService()
@@ -16,7 +16,9 @@ course_service = CourseService()
 grade_card_service = GradeCardService()
 
 
-@grade_card_router.get("/", status_code=status.HTTP_200_OK, response_model=List[GradeCardResponse])
+@grade_card_router.get(
+    "/", status_code=status.HTTP_200_OK, response_model=List[GradeCardResponse]
+)
 def get_all_grade_cards(db: Session = Depends(get_db_session)):
     grade_cards = grade_card_service.get_all(db=db)
     return [
@@ -32,7 +34,9 @@ def get_all_grade_cards(db: Session = Depends(get_db_session)):
     ]
 
 
-@grade_card_router.post("/", status_code=status.HTTP_201_CREATED, response_model=GradeCardResponse)
+@grade_card_router.post(
+    "/", status_code=status.HTTP_201_CREATED, response_model=GradeCardResponse
+)
 def create_grade_card(
     grade_card: GradeCardRequest, db: Session = Depends(get_db_session)
 ):

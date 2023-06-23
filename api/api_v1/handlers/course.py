@@ -5,20 +5,23 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from api.deps.db import get_db_session
-from services.course import CourseService
 from schemas.course import CourseRequest, CourseResponse
+from services.course import CourseService
 
 course_router = APIRouter()
 course_service = CourseService()
 
 
-@course_router.get("/", status_code=status.HTTP_200_OK, response_model=List[CourseResponse])
+@course_router.get(
+    "/", status_code=status.HTTP_200_OK, response_model=List[CourseResponse]
+)
 def get_all_courses(db: Session = Depends(get_db_session)):
-    courses = course_service.get_all(db=db)
-    return courses
+    return course_service.get_all(db=db)
 
 
-@course_router.post("/", status_code=status.HTTP_201_CREATED, response_model=CourseResponse)
+@course_router.post(
+    "/", status_code=status.HTTP_201_CREATED, response_model=CourseResponse
+)
 def create_course(course: CourseRequest, db: Session = Depends(get_db_session)):
     db_course = course_service.get_by_name(db=db, course_name=course.course_name)
     if db_course:

@@ -1,8 +1,10 @@
-from uuid import UUID
-from services.base import CRUDBase
-from models.grade_card import GradeCard as GradeCardModel
-from sqlalchemy.orm import Session
 from typing import Optional
+from uuid import UUID
+
+from sqlalchemy.orm import Session
+
+from models.grade_card import GradeCard as GradeCardModel
+from services.base import CRUDBase
 
 
 class GradeCardService(CRUDBase):

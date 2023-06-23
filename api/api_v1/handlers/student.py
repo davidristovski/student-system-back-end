@@ -5,17 +5,18 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from api.deps.db import get_db_session
-from services.student import StudentService
 from schemas.student import StudentRequest, StudentResponse
+from services.student import StudentService
 
 student_router = APIRouter()
 student_service = StudentService()
 
 
-@student_router.get("/", status_code=status.HTTP_200_OK, response_model=List[StudentResponse])
+@student_router.get(
+    "/", status_code=status.HTTP_200_OK, response_model=List[StudentResponse]
+)
 def get_all_students(db: Session = Depends(get_db_session)):
-    students = student_service.get_all(db=db)
-    return students
+    return student_service.get_all(db=db)
 
 
 @student_router.get(
@@ -31,7 +32,9 @@ def get_student(student_uuid: UUID, db: Session = Depends(get_db_session)):
     return db_student
 
 
-@student_router.post("/", status_code=status.HTTP_201_CREATED, response_model=StudentResponse)
+@student_router.post(
+    "/", status_code=status.HTTP_201_CREATED, response_model=StudentResponse
+)
 def create_student(student: StudentRequest, db: Session = Depends(get_db_session)):
     db_student = student_service.get_by_email(db=db, email=student.email)
     if db_student:

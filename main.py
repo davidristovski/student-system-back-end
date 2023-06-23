@@ -1,19 +1,14 @@
-from database.db_healthcheck import init_db
-from errors.exceptions import validation_exception_handler
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+
 from api.api_v1.router import router
 from core.config import settings
-
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-]
+from database.db_healthcheck import init_db
+from errors.exceptions import validation_exception_handler
 
 app = FastAPI(
-    title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_middleware(
