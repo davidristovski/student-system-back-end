@@ -1,6 +1,6 @@
 ##  Getting Started
 
-### 1. Setup
+### Setup
 
 ```shell script
 git clone https://github.com/davidristovski/student-system-back-end.git
@@ -42,7 +42,7 @@ You can modify the rest of the environment variables if you wish.
 
 Save the `.env` file with your new set of keys.
 
-### 2. Running the `uvicorn` server directly.
+### Running the `uvicorn` server directly.
 
 Once the `.env` file has been configured, you can run the server directly in
 your environment. Open up a new terminal window and do:
@@ -60,7 +60,7 @@ alembic upgrade head # this will run the migration(s)
 uvicorn main:app --reload
 ```
 
-### 3. Running via docker-compose
+### Running via docker-compose
 
 To run the app in a container, just do:
 ```commandline
