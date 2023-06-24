@@ -1,4 +1,4 @@
-# Back-end for Student Management
+Student Management back-end
 
 ##  Getting Started
 
@@ -62,8 +62,6 @@ alembic upgrade head # this will run the migration(s)
 uvicorn main:app --reload
 ```
 
-Once the server loads, the app will be live at [http://localhost:8000](http://localhost:8000).
-
 ### 3. Running via docker-compose
 
 To run the app in a container, just do:
@@ -71,9 +69,13 @@ To run the app in a container, just do:
 docker-compose up --build
 ```
 
+Once the server loads, the app will be live at [http://localhost:8000](http://localhost:8000).
+
 ## Documentation
 
 FastAPI automatically generates documentation based on the specification of the endpoints you have written. You can find the docs at [http://localhost:8000/docs](http://localhost:8000/docs).
+
+There's also the alternative version that can be found here: [http://localhost:8000/redoc](http://localhost:8000/redoc).
 
 ## Authentication
 
