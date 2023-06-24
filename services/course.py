@@ -8,8 +8,7 @@ from services.base import CRUDBase
 
 class CourseService(CRUDBase):
     def __init__(self):
-        self.model = CourseModel
-        super().__init__(self.model)
+        super().__init__(CourseModel)
 
     def get_by_name(self, *, db: Session, course_name: str) -> Optional[CourseModel]:
         return (

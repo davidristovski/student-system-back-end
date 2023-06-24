@@ -9,8 +9,7 @@ from services.base import CRUDBase
 
 class UserService(CRUDBase):
     def __init__(self):
-        self.model = UserModel  # easier for autocomplete!
-        super().__init__(self.model)
+        super().__init__(UserModel)
 
     def get_by_username(self, *, db: Session, username: str) -> Optional[UserModel]:
         return (

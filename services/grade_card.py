@@ -9,8 +9,7 @@ from services.base import CRUDBase
 
 class GradeCardService(CRUDBase):
     def __init__(self):
-        self.model = GradeCardModel
-        super().__init__(self.model)
+        super().__init__(GradeCardModel)
 
     def get_by_student_and_course_uuid(
         self, *, db: Session, student_uuid: UUID, course_uuid: UUID

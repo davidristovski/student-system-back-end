@@ -14,7 +14,12 @@ user_router = APIRouter()
 user_service = UserService()
 
 
-@user_router.get("/", status_code=status.HTTP_200_OK, dependencies=[Depends(get_current_user)], response_model=List[UserResponse])
+@user_router.get(
+    "/",
+    status_code=status.HTTP_200_OK,
+    dependencies=[Depends(get_current_user)],
+    response_model=List[UserResponse],
+)
 def get_users(db: Session = Depends(get_db_session)):
     return user_service.get_all(db=db)
 
