@@ -1,5 +1,3 @@
-Student Management back-end
-
 ##  Getting Started
 
 ### 1. Setup
